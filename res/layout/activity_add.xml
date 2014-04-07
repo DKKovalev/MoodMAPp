@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/foo"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bad">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="How's your mood today?"
+            android:id="@+id/textView" android:layout_alignParentLeft="true" android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true" android:layout_marginTop="0dp"/>
+    <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBarMood" android:max="255" android:progress="0" android:indeterminate="false"
+            android:layout_alignParentLeft="true" android:layout_marginLeft="0dp" android:layout_alignParentTop="true"
+            android:layout_marginTop="52dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textDescription" android:layout_alignParentLeft="true" android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true" android:layout_marginTop="116dp"/>
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_alignTop="@+id/textDescription" android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Describe why"
+            android:id="@+id/textExplanation"
+            android:layout_below="@+id/textDescription" android:layout_toRightOf="@+id/textDescription"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share your mood"
+            android:id="@+id/buttonShareMood"
+            android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+            android:layout_marginBottom="24dp" android:layout_alignParentRight="true"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_text_comment"
+            android:layout_below="@+id/textExplanation" android:layout_toRightOf="@+id/textDescription"
+            android:layout_alignParentRight="true"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imagePreview" android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/textDescription"/>
+
+</RelativeLayout>
