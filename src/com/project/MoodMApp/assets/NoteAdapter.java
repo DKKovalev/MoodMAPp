@@ -24,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by PsichO on 05.04.2014.
  */
-public class NoteAdapter extends ArrayAdapter<Note> implements Animation.AnimationListener {
+public class NoteAdapter extends ArrayAdapter<Note>  {
 
     private ArrayList<Note> notes;
 
@@ -56,8 +56,6 @@ public class NoteAdapter extends ArrayAdapter<Note> implements Animation.Animati
 
         animationZoomIn = AnimationUtils.loadAnimation(context, R.anim.zoom_in);
 
-        animationZoomIn.setAnimationListener(this);
-
         if(convertView == null) {
             convertView = inflater.inflate(R.layout.list_item, null);
             holder = new ViewHolder();
@@ -82,20 +80,12 @@ public class NoteAdapter extends ArrayAdapter<Note> implements Animation.Animati
                 options.inSampleSize = 8;
 
                 Bitmap bmp = BitmapFactory.decodeFile(note.getImage(), options);
-                //Bitmap resized = Bitmap.createScaledBitmap(bmp, 150, 150, true);
+
+                /*if(bmp != null){
+                    photo.setImageBitmap(Bitmap.createScaledBitmap(bmp, 150, 150, true));
+                }  */
 
                 photo.setImageBitmap(bmp);
-
-                photo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                            photo.startAnimation(animationZoomIn);
-
-                            Toast.makeText(context, "HELLO", Toast.LENGTH_LONG).show();
-
-                    }
-                });
             }
 
             holder.date.setText(note.getDate().toString());
@@ -111,23 +101,5 @@ public class NoteAdapter extends ArrayAdapter<Note> implements Animation.Animati
         TextView comment;
         TextView date;
         ImageView photo;
-    }
-
-    @Override
-    public void onAnimationStart(Animation animation) {
-
-    }
-
-    @Override
-    public void onAnimationEnd(Animation animation) {
-        if(animation == animationZoomIn){
-
-        }
-
-    }
-
-    @Override
-    public void onAnimationRepeat(Animation animation) {
-
     }
 }
