@@ -12,6 +12,8 @@ public class Note {
 
     String image;
 
+    String coords;
+
     Double lat;
     Double lng;
 
@@ -54,6 +56,23 @@ public class Note {
         this.comment = comment;
         this.image = image;
         this.date = date;
+    }
+
+    public Note (String mood, String comment, String image, String coords ,String date){
+
+        this.mood = mood;
+        this.comment = comment;
+        this.image = image;
+        this.date = date;
+        this.coords = coords;
+    }
+
+    public Note (String mood, String comment, String coords ,String date){
+
+        this.mood = mood;
+        this.comment = comment;
+        this.date = date;
+        this.coords = coords;
     }
 
     public String getMood(){
@@ -110,5 +129,13 @@ public class Note {
 
     public void setImage(String image){
         this.image = image;
+    }
+
+    public String getCoords(){
+        return this.coords;
+    }
+
+    public void setCoords(String coords){
+        this.coords = coords;
     }
 }

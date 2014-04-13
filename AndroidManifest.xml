@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddActivity"/>
+        <activity android:name=".NoteActivity"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>

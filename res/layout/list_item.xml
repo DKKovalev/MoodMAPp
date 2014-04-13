@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
@@ -7,19 +7,25 @@
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/photo" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
+            android:id="@+id/photo" android:layout_gravity="center_horizontal"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/mood" android:layout_below="@+id/photo" android:layout_toRightOf="@+id/photo"
-            android:layout_marginLeft="37dp"/>
+            android:id="@+id/mood"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/comment" android:layout_below="@+id/mood" android:layout_toRightOf="@+id/photo"
-            android:layout_marginTop="39dp"/>
+            android:id="@+id/comment" android:layout_gravity="center_horizontal"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/date" android:layout_alignParentRight="true" android:layout_alignBottom="@+id/mood"/>
-</RelativeLayout>
+            android:id="@+id/date" android:layout_gravity="center_horizontal"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lat" android:layout_gravity="center_horizontal"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lng" android:layout_gravity="center_horizontal"/>
+</LinearLayout>

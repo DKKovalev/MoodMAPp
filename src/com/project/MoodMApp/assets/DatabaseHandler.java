@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 18;
     private static final String DATABASE_NAME = "moodsHolder.db";
 
     private static final String TABLE_MOODS = "moods";
@@ -23,14 +23,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_COMMENT = "comment";
     private static final String KEY_PICTURE = "picture";
     private static final String KEY_DATE = "date";
+    private static final String KEY_LAT = "lat";
+    private static final String KEY_LNG = "lng";
+    private static final String KEY_COORD = "coord";
 
     Context context;
 
     private static final String DATABASE_CREATE = "CREATE TABLE "
             + TABLE_MOODS + "("
+            + KEY_ID + " INTEGER PRIMARY KEY, "
             + KEY_MOOD + " STRING,"
             + KEY_COMMENT + " STRING,"
             + KEY_PICTURE + " STRING,"
+            + KEY_LAT + " DOUBLE,"
+            + KEY_LNG + " DOUBLE,"
+            + KEY_COORD + " STRING,"
             + KEY_DATE + " STRING)";
 
     public DatabaseHandler(Context context){
@@ -57,6 +64,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_MOOD, note.getMood());
         values.put(KEY_COMMENT, note.getComment());
         values.put(KEY_PICTURE, note.getImage());
+        values.put(KEY_LAT, note.getLat());
+        values.put(KEY_LNG, note.getLng());
+        values.put(KEY_COORD, note.getCoords());
         values.put(KEY_DATE, note.getDate());
 
         sqLiteDatabase.insert(TABLE_MOODS, null, values);
@@ -72,6 +82,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         throw new Exception("Event  with title=" + title + " not found");
     }
 
+    /*public Note getNoteByID(int id) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.query(TABLE_MOODS, new String[] { KEY_ID,
+                        KEY_MOOD, KEY_COMMENT, KEY_PICTURE, KEY_LAT, KEY_LNG, KEY_DATE }, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Note note = new Note(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+        // return contact
+        return note;
+    }*/
+
     public ArrayList<Note> getAllNotes() {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Note> notes = new ArrayList<Note>();
@@ -79,10 +104,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (notesCursor.moveToFirst()) {
             do {
                 Note note = new Note();
-                note.setMood(notesCursor.getString(0));
-                note.setComment(notesCursor.getString(1));
-                note.setImage(notesCursor.getString(2));
-                note.setDate(notesCursor.getString(3));
+                note.setID(Integer.parseInt(notesCursor.getString(0)));
+                note.setMood(notesCursor.getString(1));
+                note.setComment(notesCursor.getString(2));
+                note.setImage(notesCursor.getString(3));
+                note.setLat(notesCursor.getDouble(4));
+                note.setLng(notesCursor.getDouble(5));
+                note.setCoords(notesCursor.getString(6));
+                note.setDate(notesCursor.getString(7));
                 notes.add(note);
             } while (notesCursor.moveToNext());
         }
@@ -107,6 +136,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_MOOD, note.getMood());
         values.put(KEY_COMMENT, note.getComment());
         values.put(KEY_PICTURE, note.getImage());
+        values.put(KEY_LAT, note.getLat());
+        values.put(KEY_LNG, note.getLng());
+        values.put(KEY_COORD, note.getCoords());
         values.put(KEY_DATE, note.getDate());
 
         return sqLiteDatabase.update(TABLE_MOODS,values,KEY_ID + " =?", new String[]{String.valueOf(note.getID())});

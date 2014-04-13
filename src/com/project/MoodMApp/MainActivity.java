@@ -12,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.project.MoodMApp.assets.*;
 
 import java.text.SimpleDateFormat;
@@ -49,12 +51,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         fragmentManager = getSupportFragmentManager();
 
         databaseHandler = new DatabaseHandler(this);
+
+        MyMapFragment myMapFragment = new MyMapFragment();
+
         //---------------------------
         //databaseHandler.formatDB();
         //---------------------------
         list = new ArrayList<Note>();
 
         list.addAll(databaseHandler.getAllNotes());
+
         NewsFragment.noteAdapter = new NoteAdapter(this, R.layout.list_item,list);
 
         viewPager = (ViewPager)findViewById(R.id.pager);

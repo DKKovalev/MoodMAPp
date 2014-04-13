@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +34,9 @@ public class NoteAdapter extends ArrayAdapter<Note>  {
 
     LayoutInflater inflater;
 
-    private boolean isZoomed = false;
-
     private Context context;
 
     private static View view;
-    private ImageView photo;
 
     public NoteAdapter(Context context, int textViewResourceId, ArrayList<Note> notes){
         super(context, textViewResourceId, notes);
@@ -59,11 +58,12 @@ public class NoteAdapter extends ArrayAdapter<Note>  {
         if(convertView == null) {
             convertView = inflater.inflate(R.layout.list_item, null);
             holder = new ViewHolder();
-            photo = holder.photo;
             holder.mood = (TextView)convertView.findViewById(R.id.mood);
             holder.comment = (TextView)convertView.findViewById(R.id.comment);
-            photo = (ImageView)convertView.findViewById(R.id.photo);
+            holder.photo = (ImageView)convertView.findViewById(R.id.photo);
             holder.date = (TextView)convertView.findViewById(R.id.date);
+            holder.lat = (TextView)convertView.findViewById(R.id.lat);
+            holder.lng = (TextView)convertView.findViewById(R.id.lng);
 
             convertView.setTag(holder);
         } else {
@@ -83,11 +83,13 @@ public class NoteAdapter extends ArrayAdapter<Note>  {
 
                 /*if(bmp != null){
                     photo.setImageBitmap(Bitmap.createScaledBitmap(bmp, 150, 150, true));
-                }  */
+                } */
 
-                photo.setImageBitmap(bmp);
+                holder.photo.setImageBitmap(bmp);
             }
 
+            holder.lat.setText(note.getLat().toString());
+            holder.lng.setText(note.getLng().toString());
             holder.date.setText(note.getDate().toString());
         }
 
@@ -101,5 +103,8 @@ public class NoteAdapter extends ArrayAdapter<Note>  {
         TextView comment;
         TextView date;
         ImageView photo;
+        TextView lat;
+        TextView lng;
     }
+
 }
