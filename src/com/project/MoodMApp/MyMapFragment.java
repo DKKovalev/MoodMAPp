@@ -1,5 +1,9 @@
 package com.project.MoodMApp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +19,8 @@ import com.project.MoodMApp.assets.Note;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by PsichO on 05.04.2014.
@@ -23,17 +29,44 @@ public class MyMapFragment extends Fragment {
 
     ArrayList<Note> notes;
 
-    ArrayList<HashMap<String, Double>> mapCoords = new ArrayList<HashMap<String, Double>>();
-    ArrayList<HashMap<String, String>> mapData = new ArrayList<HashMap<String, String>>();
-
     DatabaseHandler databaseHandler;
+
+    IntentFilter intentFilter;
 
     GoogleMap map;
 
-    String lat;
-    String lng;
+    HashMap<Marker, String> markers;
+
+    public final static String UPDATE_MAP = "com.project.MoodMApp";
+
     String title;
-    String comment;
+
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Double lat = intent.getExtras().getDouble("lat");
+            Double lng = intent.getExtras().getDouble("lng");
+
+            LatLng latLng = new LatLng(lat, lng);
+
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    );
+
+
+
+            markers = new HashMap<Marker, String>();
+            markers.put(marker, title);
+
+
+
+        }
+
+
+
+    };
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +74,15 @@ public class MyMapFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_map, null, false);
 
         setupMapIfNeeded();
+
+        setupMap();
+
+        intentFilter = new IntentFilter();
+
+        intentFilter.addAction(UPDATE_MAP);
+
+        getActivity().registerReceiver(broadcastReceiver, intentFilter);
+
 
         return view;
     }
@@ -58,8 +100,18 @@ public class MyMapFragment extends Fragment {
 
     private void setupMap() {
 
-        databaseHandler = new DatabaseHandler(getActivity());
+        Iterator iterator = markers.entrySet().iterator();
+
+        while (iterator.hasNext()){
+            Map.Entry entry = (Map.Entry)iterator.next();
+
+
+        }
+
+        /*databaseHandler = new DatabaseHandler(getActivity());
         notes = databaseHandler.getAllNotes();
+
+
 
         for (int i = 0; i < notes.size(); i++) {
 
@@ -69,28 +121,17 @@ public class MyMapFragment extends Fragment {
                     .position(latLng)
                     .title(notes.get(i).getMood()));
 
+
+
             HashMap<Marker, String> markers = new HashMap<Marker, String>();
             markers.put(marker, title);
+        }*/
+    }
 
-            /*HashMap<String, Double> coordsHelper = new HashMap<String, Double>();
-            coordsHelper.put(lat, notes.get(i).getLat());
-            coordsHelper.put(lng, notes.get(i).getLng());
-
-            mapCoords.add(coordsHelper);
-
-            HashMap<String, String> dataHelper = new HashMap<String, String>();
-            dataHelper.put(title, notes.get(i).getMood());
-            dataHelper.put(comment, notes.get(i).getComment());
-
-            mapData.add(dataHelper);
-
-            for (HashMap<String, Double> hashMap : mapCoords) {
-                map.addMarker(new MarkerOptions()
-                        .position(new LatLng(hashMap.get(lat),
-                                hashMap.get(lng)))
-                        .title("Another marker"));
-            }*/
-        }
+    @Override
+    public void onResume() {
+        getActivity().registerReceiver(broadcastReceiver, intentFilter);
+        super.onResume();
     }
 
     @Override

@@ -13,12 +13,14 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.project.MoodMApp.assets.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -40,6 +42,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public static FragmentManager fragmentManager;
 
     final private static int GET_NEW_MOOD = 0000;
+
+
+
     /**
      * Called when the activity is first created.
      */
@@ -148,6 +153,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
                         note.setLat(lat);
                         note.setLng(lng);
+
+                        Intent intent = new Intent("addMarker");
+                        intent.setAction(MyMapFragment.UPDATE_MAP);
+                        intent.putExtra("lat", lat);
+                        intent.putExtra("lng", lng);
+
+                        sendBroadcast(intent);
 
                         Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + lat + "\nLong: " + lng, Toast.LENGTH_LONG).show();
                     }else {
